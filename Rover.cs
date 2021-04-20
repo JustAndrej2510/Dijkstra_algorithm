@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Rover
+﻿namespace Rover
 {
     public class Rover
     {
@@ -20,7 +14,37 @@ namespace Rover
                 this.Y = y;
             }
 
-            
+            public static bool operator ==(Node a, Node b)
+            {
+                return a.X == b.X && a.Y == b.Y;
+            }
+            public static bool operator !=(Node a, Node b)
+            {
+                return !(a == b);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (obj as Node == null)
+                    return false;
+                Node node = (Node)obj;
+                if (node == this)
+                    return true;
+                else
+                    return false;
+            }
+
+            public void Copy(Node a)
+            {
+                this.X = a.X;
+                this.Y = a.Y;
+            }
+
+            public void AddPoint(int x, int y)
+            {
+                this.X = x;
+                this.Y = y;
+            }
 
         }
         public static void CalculateRoverPath(int[,] map)
