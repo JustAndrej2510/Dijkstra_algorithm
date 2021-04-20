@@ -95,6 +95,45 @@ namespace Rover
             power[1, 1] = 0;
             Node node = new Node(1, 1);
 
+            // Реализация алгоритма поиска пути с минимальными затратами энергии
+            while (!visitedNode[target.X, target.Y])
+            {
+                int tempMin = INF; // Временная переменная с минимальным значнием следующей клетки
+                for (int i = 1; i < sizeN - 1; i++)
+                {
+                    for (int j = 1; j < sizeM - 1; j++)
+                    {
+                        if (power[i, j] < tempMin && !visitedNode[i, j])
+                        {
+                            tempMin = power[i, j]; // Присваиваем значение соседа с минимальной стоимостью и записываем его координаты
+                            node.X = i;
+                            node.Y = j;
+                        }
+                    }
+                }
+                visitedNode[node.X, node.Y] = true; // Помечаем клетку как посещенную
+
+
+                for (int i = node.X - 1; i < node.X + 2; i++)
+                {
+                    for (int j = node.Y - 1; j < node.Y + 2; j++)
+                    {
+                        if (!visitedNode[i, j] && ((i == node.X && j != node.Y) || (i != node.X && j == node.Y))) // Проверяем, посещена ли клетка и не является ли она диагональной,
+                        {                                                                                        // т.к. ходить мы можем только на север, юг, запад, восток
+
+                            if ((CalculatePower(tempMap[node.X, node.Y], tempMap[i, j]) + power[node.X, node.Y]) < power[i, j]) // Сравниваем стоимость перехода в клетку с ее предыдущей стоимостью
+                            {
+
+                                power[i, j] = CalculatePower(tempMap[node.X, node.Y], tempMap[i, j]) + power[node.X, node.Y]; // Присваиваем значение минимальной стоимости
+
+                                neighbours[i, j].Copy(node); // Записываем соседа, из которого пришли
+
+                            }
+                        }
+                    }
+                }
+
+            }
 
         }
         private static int CalculatePower(int prev, int cur) // Расчет стоимости перехода в определенную клетку
