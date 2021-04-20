@@ -49,7 +49,7 @@ namespace Rover
 
     public class Rover
     {
-        const int INF = 999999999; // Некоторое очень большое число 
+        const int INF = int.MaxValue; // Некоторое очень большое число 
         public static void CalculateRoverPath(int[,] map) //Расчет минимального пути
         {
             int sizeN = map.GetLength(0) + 2;// Ставим "рамки" для матрицы,
@@ -61,7 +61,7 @@ namespace Rover
             bool[,] visitedNode = new bool[sizeN, sizeM]; // Матрица с посещенными клетками
             Node target = new Node(sizeN - 2, sizeM - 2); // Координаты конечной точки
             Node[,] neighbours = new Node[sizeN, sizeM]; // Матрица с соседями (откуда пришли)
-            Node[] resPath = new Node[map.Length - 1]; // Наш итоговый путь
+            Node[] resPath = new Node[map.Length]; // Наш итоговый путь
 
             //Инициализируем переменные начальными значениями
             for (int i = 0; i < sizeN; i++)
@@ -85,7 +85,7 @@ namespace Rover
             }
 
             // Заполняем значения итогового пути (пока что любыми)
-            for (int i = 0; i < map.Length - 1; i++)
+            for (int i = 0; i < map.Length; i++)
             {
                 resPath[i] = new Node(-1, -1);
             }
@@ -134,6 +134,25 @@ namespace Rover
                 }
 
             }
+
+            fuel = power[target.X, target.Y]; // Стоимость прохождения до конечной точки
+            Node pathNode = new Node(target.X, target.Y);// Записываем координаты клеток для восстановления пути
+
+            //Восстановление пути
+            while (true)
+            {
+
+                resPath[steps].AddPoint(pathNode.X - 1, pathNode.Y - 1);// Добавляем их в итоговый путь
+                pathNode.Copy(neighbours[pathNode.X, pathNode.Y]); // Достаем значение соседа, из которого пришли
+                steps++;
+
+                if (pathNode.X == 1 && pathNode.Y == 1) // Если дошли до начальной клетки, то выходим из цикла и добавляем координат начальной клетки в итоговый путь
+                {
+                    resPath[steps].AddPoint(pathNode.X - 1, pathNode.Y - 1);
+                    break;
+                }
+            }
+
 
         }
         private static int CalculatePower(int prev, int cur) // Расчет стоимости перехода в определенную клетку
