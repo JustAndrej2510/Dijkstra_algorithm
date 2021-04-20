@@ -152,6 +152,19 @@ namespace Rover
 
             }
 
+            using (StreamWriter sw = new StreamWriter("path-plan.txt", false)) // Записываем результат в файл
+            {
+                for (int i = steps; i >= 0; i--)
+                {
+                    if (i == 0)
+                        sw.Write($"[{resPath[i].X}][{resPath[i].Y}]");
+                    else
+                        sw.Write($"[{resPath[i].X}][{resPath[i].Y}] -> ");
+                }
+                sw.WriteLine();
+                sw.WriteLine($"Steps: {steps}\nFuel: {fuel}");
+            }
+
 
         }
         private static int CalculatePower(int prev, int cur) // Расчет стоимости перехода в определенную клетку
