@@ -141,16 +141,15 @@ namespace Rover
             //Восстановление пути
             while (true)
             {
-
-                resPath[steps].AddPoint(pathNode.X - 1, pathNode.Y - 1);// Добавляем их в итоговый путь
-                pathNode.Copy(neighbours[pathNode.X, pathNode.Y]); // Достаем значение соседа, из которого пришли
-                steps++;
-
                 if (pathNode.X == 1 && pathNode.Y == 1) // Если дошли до начальной клетки, то выходим из цикла и добавляем координат начальной клетки в итоговый путь
                 {
                     resPath[steps].AddPoint(pathNode.X - 1, pathNode.Y - 1);
                     break;
                 }
+                resPath[steps].AddPoint(pathNode.X - 1, pathNode.Y - 1);// Добавляем их в итоговый путь
+                pathNode.Copy(neighbours[pathNode.X, pathNode.Y]); // Достаем значение соседа, из которого пришли
+                steps++;
+
             }
 
 
