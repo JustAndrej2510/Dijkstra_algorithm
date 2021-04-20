@@ -12,7 +12,15 @@ namespace Rover
         {
 
         }
+        private static int CalculatePower(int prev, int cur)
+        {
+            int power = (cur - prev);
+            if (power < 0)
+                power *= -1;
+            power = 1 + power;
 
+            return power;
+        }
     }
 
 }
