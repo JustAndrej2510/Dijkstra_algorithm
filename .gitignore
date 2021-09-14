@@ -1,0 +1,9 @@
+[Bb]in/
+[Oo]bj/
+[Pp]roperties/
+*.config
+*.resx
+*.csproj
+*.sln
+*.txt
+*.vs/
